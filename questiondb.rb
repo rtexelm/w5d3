@@ -1,11 +1,11 @@
 require 'sqlite3'
-require 'singelton'
+require 'singleton'
 
 class QuestionsDB < SQLite3::Database
     include Singleton
 
     def initialize
-        super('plays.db')
+        super('questions.db')
         self.type_translation = true
         self.results_as_hash = true
     end
@@ -25,8 +25,7 @@ class User
                 id = ?
         SQL
         return nil unless user.length > 0
-
-        User.new(user) 
+        user.map {|user| User.new(user)}
     end
 
     def self.find_by_name(fname, lname)
@@ -41,8 +40,7 @@ class User
                 lname = ?
         SQL
         return nil unless user.length > 0
-
-        User.new(user)    
+        user.map {|user| User.new(user)}   
     end
 
 
@@ -73,7 +71,7 @@ class Question
         SQL
         return nil unless question.length > 0
 
-        Question.new(question) 
+        question.map {|question| Question.new(question)}
     end
 
     def self.find_by_title(title)
@@ -87,7 +85,7 @@ class Question
         SQL
         return nil unless f_title.length > 0
 
-        Question.new(f_title) 
+        f_title.map {|question| Question.new(question)}
     end
     
     def self.find_by_author(author_id)
@@ -101,7 +99,7 @@ class Question
         SQL
         return nil unless f_author_id.length > 0
 
-        Question.new(f_author_id) 
+        f_author_id.map {|question| Question.new(question)}
     end
 
     def initialize(options)
@@ -122,7 +120,8 @@ class Question
         SQL
         return nil unless f_author_id.length > 0
 
-        f_author_id.map {|author| User.new(author)}
+        f_author_id.map {|author| Question.new(author)}
+    end
 end
 
 class Question_follows
@@ -140,7 +139,7 @@ class Question_follows
         SQL
         return nil unless follows.length > 0
 
-        Question_follows.new(follows) 
+        follows.map {|follows| Quesiton_follows.new(follows)}
     end
 
     def self.find_by_q_id(question_id)
@@ -181,7 +180,7 @@ end
 
 class Replies
 
-    attr_accessor :id, :question_id :question_reply_id, :user_id, :body
+    attr_accessor :id, :question_id, :question_reply_id, :user_id, :body
     def self.find_by_id(id)
         replies = QuestionsDB.instance.execute(<<-SQL, id)
             SELECT
