@@ -8,7 +8,7 @@ CREATE TABLE users
   lname TEXT NOT NULL
 );
 
-CREATE TABLE questions
+CREATE TABLE questions 
 (
   id INTEGER PRIMARY KEY,
   title TEXT NOT NULL,
