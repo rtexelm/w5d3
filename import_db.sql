@@ -28,7 +28,7 @@ CREATE TABLE question_follows
   FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
-CREATE TABLE replies
+CREATE TABLE replies 
 (
   id INTEGER PRIMARY KEY,
   question_id INTEGER NOT NULL,
