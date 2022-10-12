@@ -1,5 +1,10 @@
 PRAGMA foreign_keys = ON;
-DROP TABLE IF EXISTS question_likes, replies, question_follows, questions, users;
+DROP TABLE IF EXISTS question_likes;
+DROP TABLE IF EXISTS replies;
+DROP TABLE IF EXISTS question_follows;
+DROP TABLE IF EXISTS questions;
+DROP TABLE IF EXISTS users;
+
 
 CREATE TABLE users
 (
@@ -15,7 +20,7 @@ CREATE TABLE questions
   body TEXT NOT NULL,
   author_id INTEGER NOT NULL
 
-  FOREIGN KEY (author_id) REFERENCES users (id)
+  FOREIGN KEY (author_id) REFERENCES users(id)
 );
 
 CREATE TABLE question_follows
@@ -24,8 +29,8 @@ CREATE TABLE question_follows
   question_id INTEGER NOT NULL,
   user_id INTEGER NOT NULL
 
-  FOREIGN KEY (question_id) REFERENCES questions (id)
-  FOREIGN KEY (user_id) REFERENCES users (id)
+  FOREIGN KEY (question_id) REFERENCES questions(id)
+  FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE replies
