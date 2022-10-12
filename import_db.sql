@@ -51,7 +51,7 @@ CREATE TABLE question_likes
   FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
-INSERT INTO users (fname, lname)
+INSERT INTO users (fname, lname) 
 VALUES 
 ('Barry', 'Gold'),
 ('Tom', 'Lee'),
