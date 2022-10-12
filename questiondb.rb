@@ -52,6 +52,10 @@ class User
         @lname = options['lname']
     end
 
+    def authored_replies
+        Replies.find_by_u_id(self.id)
+    end
+
 end
 
 class Question
@@ -107,6 +111,18 @@ class Question
         @author_id = options['author_id']
     end
 
+    def author
+        f_author_id = QuestionsDB.instance.execute(<<-SQL, author_id)
+            SELECT
+                *
+            FROM
+                users
+            WHERE
+                user_id = ?
+        SQL
+        return nil unless f_author_id.length > 0
+
+        f_author_id.map {|author| User.new(author)}
 end
 
 class Question_follows
